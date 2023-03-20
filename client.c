@@ -21,19 +21,34 @@ int main()
         exit(1);
     }
 
+    // prepare csv for gnuplot
+    FILE *fp = fopen("time.csv", "w+");
+    if (fp == NULL) {
+        fprintf(stderr, "fopen() failed.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    fprintf(fp, "nth Fibonacci, Fast Doubling\n");
+
     for (int i = 0; i <= offset; i++) {
-        sz = write(fd, write_buf, strlen(write_buf));
-        printf("Writing to " FIB_DEV ", returned the sequence %lld\n", sz);
+        // sz = read(fd, buf, 1);
+        // long long time = write(fd, write_buf, strlen(write_buf));
+        // printf("Writing to " FIB_DEV ", returned the sequence %lld\n", time);
+        printf("Writing to " FIB_DEV ", returned the sequence %d\n", 1);
     }
 
     for (int i = 0; i <= offset; i++) {
         lseek(fd, i, SEEK_SET);
         sz = read(fd, buf, 1);
+        long long time = write(fd, write_buf, strlen(write_buf));
         printf("Reading from " FIB_DEV
                " at offset %d, returned the sequence "
                "%lld.\n",
                i, sz);
+        fprintf(fp, "%d, %lld\n", i, time);
     }
+
+    fclose(fp);
 
     for (int i = offset; i >= 0; i--) {
         lseek(fd, i, SEEK_SET);
