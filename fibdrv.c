@@ -33,6 +33,7 @@ static long long fib_sequence(long long k)
     /* FIXME: C99 variable-length array (VLA) is not allowed in Linux kernel. */
     long long a = 0, b = 1;
     int leading_zero = __builtin_clzll(k);
+    // int leading_zero = 0; // @@@ for calculate time without clz
     k = k << leading_zero;
 
     for (int len = 64 - leading_zero; len > 0; len--) {
@@ -47,8 +48,21 @@ static long long fib_sequence(long long k)
         }
         k = k << 1;
     }
-
     return a;
+    /*
+    // ### loop
+    long long f[k + 2];
+
+    f[0] = 0;
+    f[1] = 1;
+
+    for (int i = 2; i <= k; i++) {
+        f[i] = f[i - 1] + f[i - 2];
+    }
+
+    return f[k];
+    // ### loop
+    */
 }
 
 static int fib_open(struct inode *inode, struct file *file)

@@ -22,13 +22,17 @@ int main()
     }
 
     // prepare csv for gnuplot
-    FILE *fp = fopen("time.csv", "w+");
+    FILE *fp = fopen("time.txt", "w+");
+    // FILE *fp = fopen("time_woclz.txt", "w+"); // @@@ without clz
+    // FILE *fp = fopen("time_loop.txt", "w+"); // ### with loop
     if (fp == NULL) {
         fprintf(stderr, "fopen() failed.\n");
         exit(EXIT_FAILURE);
     }
 
-    fprintf(fp, "nth Fibonacci, Fast Doubling\n");
+    fprintf(fp, "nth Fibonacci Fast Doubling\n");
+    // fprintf(fp, "Fast Doubling no clz\n"); // @@@ without clz
+    // fprintf(fp, "loop\n"); // ### with loop
 
     for (int i = 0; i <= offset; i++) {
         // sz = read(fd, buf, 1);
@@ -45,7 +49,9 @@ int main()
                " at offset %d, returned the sequence "
                "%lld.\n",
                i, sz);
-        fprintf(fp, "%d, %lld\n", i, time);
+        printf(fp, "%d %lld\n", i, time);
+        // fprintf(fp, "%lld\n", time); // @@@ without clz
+        // fprintf(fp, "%lld\n", time); // ### with loop
     }
 
     fclose(fp);
