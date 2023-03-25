@@ -49,7 +49,7 @@ int main()
                " at offset %d, returned the sequence "
                "%lld.\n",
                i, sz);
-        printf(fp, "%d %lld\n", i, time);
+        fprintf(fp, "%d %lld\n", i, time);
         // fprintf(fp, "%lld\n", time); // @@@ without clz
         // fprintf(fp, "%lld\n", time); // ### with loop
     }
